@@ -1,4 +1,4 @@
-#files: 591	version: 4.3.9
+#files: 592	version: 4.3.9
 
 _comps=(
 '-' '_precommand'
@@ -850,6 +850,7 @@ _comps=(
 'putclip.exe' '_putclip'
 'pwait' '_pids'
 'pwdx' '_pids'
+'pydoc' '_pydoc'
 'pyhtmlizer' '_twisted'
 'python' '_python'
 'qemu' '_qemu'
@@ -1320,47 +1321,47 @@ autoload -Uz _a2ps _a2utils _aap _acpi _acpitool \
             _ports _portsnap _postfix _powerd _prcs \
             _precommand _prefix _print _printenv _printers \
             _prompt _ps _pscp _pspdf _psutils \
-            _pump _putclip _python _qemu _qiv \
-            _qtplay _quilt _raggle _rake _ranlib \
-            _rar _rcs _read _read_comp _redirect \
-            _regex_arguments _regex_words _renice _reprepro _requested \
-            _retrieve_cache _retrieve_mac_apps _ri _rlogin _rm \
-            _rpm _rrdtool _rsync _rubber _ruby \
-            _sablotron _samba _sccs _sched _schroot \
-            _screen _sed _sep_parts _service _services \
-            _set _set_command _setopt _setup _sh \
-            _showmount _signals _sisu _slrn _smit \
-            _socket _softwareupdate _sort _source _spamassassin \
-            _sqsh _ssh _sshfs _stat _stgit \
-            _store_cache _strace _strip _stty _su \
-            _sub_commands _subscript _subversion _sudo _suffix_alias_files \
-            _surfraw _svn-buildpackage _sysctl _tags _tar \
-            _tar_archive _tardy _tcpdump _tcpsys _tcptraceroute \
-            _telnet _terminals _tex _texi _texinfo \
-            _tidy _tiff _tilde _tilde_files _time_zone \
-            _tin _tla _todo.sh _toilet _toolchain-source \
-            _totd _tpb _tpconfig _tracepath _trap \
-            _ttyctl _tune2fs _twisted _typeset _ulimit \
-            _uml _unace _uname _unexpand _unhash \
-            _uniq _units _unsetopt _update-alternatives _update-rc.d \
-            _urls _urpmi _urxvt _uscan _user_admin \
-            _user_at_host _users _users_on _valgrind _value \
-            _values _vared _vars _vim _vim-addons \
-            _vnc _volume_groups _vorbis _vorbiscomment _vserver \
-            _vux _w3m _wait _wajig _wakeup_capable_devices \
-            _wanna-build _wanted _webbrowser _wget _whereis \
-            _which _whois _wiggle _x_arguments _x_borderwidth \
-            _x_color _x_colormapid _x_cursor _x_display _x_extension \
-            _x_font _x_geometry _x_keysym _x_locale _x_modifier \
-            _x_name _x_resource _x_selection_timeout _x_title _x_utils \
-            _x_visual _x_window _xargs _xauth _xdvi \
-            _xfig _xloadimage _xmlsoft _xmodmap _xpdf \
-            _xrandr _xscreensaver _xset _xt_arguments _xt_session_id \
-            _xterm _xv _xwit _yast _yodl \
-            _yp _yum _zcalc_line _zcat _zcompile \
-            _zdump _zed _zfs _zfs_dataset _zfs_pool \
-            _zftp _zip _zle _zmodload _zmv \
-            _zpool _zpty _zstyle
+            _pump _putclip _pydoc _python _qemu \
+            _qiv _qtplay _quilt _raggle _rake \
+            _ranlib _rar _rcs _read _read_comp \
+            _redirect _regex_arguments _regex_words _renice _reprepro \
+            _requested _retrieve_cache _retrieve_mac_apps _ri _rlogin \
+            _rm _rpm _rrdtool _rsync _rubber \
+            _ruby _sablotron _samba _sccs _sched \
+            _schroot _screen _sed _sep_parts _service \
+            _services _set _set_command _setopt _setup \
+            _sh _showmount _signals _sisu _slrn \
+            _smit _socket _softwareupdate _sort _source \
+            _spamassassin _sqsh _ssh _sshfs _stat \
+            _stgit _store_cache _strace _strip _stty \
+            _su _sub_commands _subscript _subversion _sudo \
+            _suffix_alias_files _surfraw _svn-buildpackage _sysctl _tags \
+            _tar _tar_archive _tardy _tcpdump _tcpsys \
+            _tcptraceroute _telnet _terminals _tex _texi \
+            _texinfo _tidy _tiff _tilde _tilde_files \
+            _time_zone _tin _tla _todo.sh _toilet \
+            _toolchain-source _totd _tpb _tpconfig _tracepath \
+            _trap _ttyctl _tune2fs _twisted _typeset \
+            _ulimit _uml _unace _uname _unexpand \
+            _unhash _uniq _units _unsetopt _update-alternatives \
+            _update-rc.d _urls _urpmi _urxvt _uscan \
+            _user_admin _user_at_host _users _users_on _valgrind \
+            _value _values _vared _vars _vim \
+            _vim-addons _vnc _volume_groups _vorbis _vorbiscomment \
+            _vserver _vux _w3m _wait _wajig \
+            _wakeup_capable_devices _wanna-build _wanted _webbrowser _wget \
+            _whereis _which _whois _wiggle _x_arguments \
+            _x_borderwidth _x_color _x_colormapid _x_cursor _x_display \
+            _x_extension _x_font _x_geometry _x_keysym _x_locale \
+            _x_modifier _x_name _x_resource _x_selection_timeout _x_title \
+            _x_utils _x_visual _x_window _xargs _xauth \
+            _xdvi _xfig _xloadimage _xmlsoft _xmodmap \
+            _xpdf _xrandr _xscreensaver _xset _xt_arguments \
+            _xt_session_id _xterm _xv _xwit _yast \
+            _yodl _yp _yum _zcalc_line _zcat \
+            _zcompile _zdump _zed _zfs _zfs_dataset \
+            _zfs_pool _zftp _zip _zle _zmodload \
+            _zmv _zpool _zpty _zstyle
 autoload -Uz +X _call_program
 
 typeset -gUa _comp_assocs

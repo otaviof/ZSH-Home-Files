@@ -14,8 +14,10 @@ def main():
     """Copying new, newer or unexistent files"""
     zfiles = glob.glob('%s/.z*' % os.getenv('HOME'))
     for z in zfiles:
+        if not os.path.isfile(z):
+            continue
         name = os.path.basename(z).lstrip('.')
-        if  not os.path.exists(name) or (difflib.SequenceMatcher(None, open(z).read(), open(name).read()) and (os.path.getmtime(z) > os.path.getmtime(name))):
+        if  not os.path.isfile(name) or (difflib.SequenceMatcher(None, open(z).read(), open(name).read()) and (os.path.getmtime(z) > os.path.getmtime(name))):
             try:
                 print "Copying: %s, %s" % (z, name)
                 shutil.copyfile(z, name)

@@ -25,6 +25,8 @@ export PATH="$HOME/perl5/bin:$HOME/.vim/bin/:$HOME/.bin:$PATH"
 # VimRC Path
 export MYVIMRC="$HOME/.vim/vimrc"
 
+export TERM="xterm"
+
 # GitHub API's Token
 source $HOME/.github
 
