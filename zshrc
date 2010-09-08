@@ -202,11 +202,11 @@ bindkey "^[[B" history-search-forward
 # Changing XTerm Title
 # ----------------------------------------------------------------------------
 
-case $TERM in
-    xterm*)
-        precmd () { print -Pn "\e]0;%n@%m: %~\a"}
-        ;;
-esac
+# case $TERM in
+#     xterm*)
+#         precmd () { print -Pn "\e]0;%n@%m: %~\a"}
+#         ;;
+# esac
 
 # ----------------------------------------------------------------------------
 # Language
