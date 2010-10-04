@@ -37,6 +37,10 @@ elif [[ $OSTYPE == "linux-gnu" ]]; then
     alias l.='ls -G -G --color -d .*'
     alias ll='ls -F -G --color -lh '
     alias ls='ls -F -G --color '
+
+    alias mvim="vim"
+    alias vi="vim"
+
     alias tm='tail -f /var/log/messages'
 
 fi
