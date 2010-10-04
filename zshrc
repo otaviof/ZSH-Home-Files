@@ -51,36 +51,40 @@ freload() {
 # "Hooks" for man commands
 # ----------------------------------------------------------------------------
 
-man() {
-    [[ $# -eq 0 ]] && return 1
-    display_manpage $*
-}
+if [[ $OSTYPE == "darwin10.0" ]]; then
 
-info() {
-    [[ $# -eq 1 ]] || return 1
-    display_manpage "${1}.i"
-}
+    man() {
+        [[ $# -eq 0 ]] && return 1
+        display_manpage $*
+    }
 
-perldoc() {
-    if [[ $# -eq 0 ]]; then
-        /usr/bin/perldoc
-        return
-    fi
+    info() {
+        [[ $# -eq 1 ]] || return 1
+        display_manpage "${1}.i"
+    }
 
-    if [[ $1 == '-f' ]]; then
-        MAN="$2.pl -f"
-    else
-        MAN=$1
-    fi
+    perldoc() {
+        if [[ $# -eq 0 ]]; then
+            /usr/bin/perldoc
+            return
+        fi
 
-    if [[ -f $MAN ]]; then
-        echo "Operning a given file name: $MAN"
-        /usr/bin/perldoc "$MAN"
-        return
-    fi
+        if [[ $1 == '-f' ]]; then
+            MAN="$2.pl -f"
+        else
+            MAN=$1
+        fi
 
-    display_manpage "${MAN}"
-}
+        if [[ -f $MAN ]]; then
+            echo "Operning a given file name: $MAN"
+            /usr/bin/perldoc "$MAN"
+            return
+        fi
+
+        display_manpage "${MAN}"
+    }
+
+fi
 
 # ----------------------------------------------------------------------------
 # Completion options
