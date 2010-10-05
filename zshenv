@@ -1,7 +1,7 @@
 # ~/.zshenv
 
 # Fixing Hostname and setenv  ENVs
-export EDITOR="/usr/bin/vim"
+export EDITOR="mvim -f"
 export HISTFILE="$HOME/.histfile"
 export HISTSIZE=500000
 export HOST=$(cat /etc/hosts |grep '^127.0.0.1' |awk '{print $3}')
