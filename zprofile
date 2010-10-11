@@ -20,7 +20,7 @@ if [[ $OSTYPE == "darwin10.0" ]]; then
 
     alias md5sum='md5'
 
-    alias mvim='mvim -c "set columns=110 lines=50"'
+    alias mvim='EDITOR="" mvim -c "set columns=110 lines=50"'
     alias mvimdiff='vimdiff'
 
     alias strace='truss'
