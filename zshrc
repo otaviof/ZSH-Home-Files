@@ -9,26 +9,29 @@ function display_manpage() {
         -R \
         -c "Man ${*}" \
         -c "silent! only" \
-        -c "set ic invnumber" \
+        -c "let no_plugin_maps=1" \
         -c "colors blackboard" \
-        -c "set guifont=Menlo\ Regular:h13" \
-        -c "set columns=110 lines=50"
+        -c "set ic nu lines=50 co=110"
 }
 
 function display_perldoc() {
     mvim \
         -R \
-        -c "set guifont=Menlo\ Regular:h13" \
         -c "silent! only" \
-        -c 'let Perldoc_path="."' \
         -c "Perldoc ${*}" \
-        -c "setf perldoc"\
-        -c "set ic number columns=110 lines=50"
+        -c 'let Perldoc_path="."' \
+        -c "setf perldoc" \
+        -c "let no_plugin_maps=1" \
+        -c "set ic nu lines=50 co=110"
 }
 
 function git_prompt_info() {
     sudo git branch --no-color 2> /dev/null \
         |sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+function dig_hosts {
+    echo $( ack "^[^#].*?$1" /etc/hosts |awk '{print $1}' )
 }
 
 # ----------------------------------------------------------------------------
@@ -102,9 +105,13 @@ setopt extended_glob
 setopt extended_history
 setopt extendedglob
 setopt globdots
+setopt hist_expire_dups_first
 setopt hist_ignore_space
+setopt hist_ignore_dups
 setopt hist_reduce_blanks
+setopt hist_verify
 setopt histignoredups
+setopt inc_append_history
 setopt longlistjobs
 setopt mailwarning
 setopt no_beep
@@ -151,28 +158,21 @@ zstyle ':completion:*:*:-subscript-:*' \
     tag-order indexes parameters
 zstyle ':completion:*:*:kill:*:processes' \
     command 'ps -au$USER'
-zstyle ':completion:*:processes-names' \
-    command 'ps axho command'
+zstyle ':completion:*:*:kill:*:processes' \
+    list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 zstyle ':completion:*:*:(^rm):*:*files' \
     ignored-patterns '*?.o' '*?.c~' '*?.old' '*?.pro'
 zstyle ':completion:*' hosts \
-    $(
-        awk '/^[^#]/ {print $2 $3" "$4" "$5}' /etc/hosts | \
-        grep -v ip6- && grep "^#%" /etc/hosts | \
-        awk -F% '{print $2}' \
-     )
+    $( sed 's/[\#, ].*$//; /^$/d' /etc/hosts $HOME/.ssh/known_hosts )
+zstyle ':completion:*:*:(ssh|scp):*:*' hosts \
+    $( sed 's/^\([^ ,]*\).*$/\1/' $HOME/.ssh/known_hosts )
 zstyle '*' hosts $hosts
 
 # ignore completion functions (until the _ignored completer)
 zstyle ':completion:*:functions' \
     ignored-patterns '_*'
 zstyle ':completion:*:*:*:users' \
-    ignored-patterns adm apache bin daemon games gdm halt ident junkbust lp \
-    mail mailnull named news nfsnobody nobody nscd ntp operator pcap \
-    postgres radvd rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs \
-    avahi-autoipd avahi backup messagebus beagleindex debian-tor dhcp \
-    dnsmasq fetchmail firebird gnats haldaemon hplip irc klog list man \
-    cupsys postfix proxy syslog www-data mldonkey sys snort
+    ignored-patterns '_*'
 
 # completions environment path
 fpath=(~/.zsh/completion/ $fpath)

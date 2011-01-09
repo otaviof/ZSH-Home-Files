@@ -8,11 +8,41 @@ alias ff='find ./ -iname $*'
 alias mv='mv -iv'
 alias rm='rm -iv'
 
+# ---------------------------------------------------------------------------
+# Booking's
+#
+
+alias set_http_proxy="eval $(cat ~/.zshenv |grep -i '_proxy')"
+alias unset_http_proxy=" \
+    eval $(cat ~/.zshenv \
+           |grep -i '_proxy' \
+           |sed 's/^export //g; s/ //g;' \
+           |awk -F '=' '{print "unset "$1}')"
+alias kill_blackhack="ps aux |ack 'ssh blackhawk' |awk '{print \$2}' |xargs kill"
+alias kill_xmldev="ps aux |ack 'ssh xmldev' |awk '{print \$2}' |xargs kill"
+
+# ---------------------------------------------------------------------------
+# SO Specific
+#
+
 if [[ $OSTYPE == "darwin10.0" ]]; then
 
-    alias git_diff="[[ -d .git ]] && git log |ack commit |cut -d ' ' -f2 |head -n ${LAST_COMMITS} |xargs -n 2 git diff -R |mvimdiff -R -c 'colorscheme blackboard' -c 'set ic' - > /dev/null 2>&1"
+    #
+    # Mac OS X
+    #
+
+    alias git_diff=" \
+        [[ -d .git ]] && git log \
+        |ack commit \
+        |cut -d ' ' -f2 \
+        |head -n ${LAST_COMMITS} \
+        |xargs -n 2 git diff -R \
+        |mvimdiff -R -c 'colorscheme blackboard' -c 'set ic' - > /dev/null 2>&1"
+
     alias gitx='GitX . > /dev/null 2>&1 &'
     alias gvim='mvim'
+
+    alias hosts="sudo mvim /etc/hosts"
 
     alias l.='ls -FG -d .*'
     alias ll='ls -FG -lh '
@@ -28,11 +58,11 @@ if [[ $OSTYPE == "darwin10.0" ]]; then
     alias vi='vim'
     alias vimdiff='mvim -d'
 
-    # Booking's
-    alias kill_blackhack="ps aux |ack 'ssh blackhawk' |awk '{print \$2}' |xargs kill"
-    alias kill_xmldev="ps aux |ack 'ssh xmldev' |awk '{print \$2}' |xargs kill"
-
 elif [[ $OSTYPE == "linux-gnu" ]]; then
+
+    #
+    # GNU/Linux
+    #
 
     alias l.='ls -G -G --color -d .*'
     alias ll='ls -F -G --color -lh '
@@ -41,8 +71,9 @@ elif [[ $OSTYPE == "linux-gnu" ]]; then
     alias mvim="vim"
     alias vi="vim"
 
-    alias tm='tail -f /var/log/messages'
+    alias hosts="sudo vim /etc/hosts"
 
+    alias tm='tail -f /var/log/messages'
 fi
 
 # EOF

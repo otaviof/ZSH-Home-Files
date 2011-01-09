@@ -1,5 +1,5 @@
 # ~/.zlogout
 
-killall ssh-agent
+# killall ssh-agent
 
 # EOF
