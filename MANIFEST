@@ -1,0 +1,23 @@
+#
+# This file is the _manifest_ of all ZSH's related files on your system that
+# you want to maintain with this simple helper. Here is the place to point them
+# all, but first you must be aware about placeholders:
+#
+# Placeholeders:
+#   <full path to file>:<local filename>
+#
+# i.e.:
+#   /Users/otaviof/.zshrc:zshrc
+#   /Users/otaviof/.zlogin:zlogin
+#   /Users/otaviof/.zlogout:zlogout
+#   /Users/otaviof/.zprofile:zprofile
+#   /Users/otaviof/.zshenv:zshenv
+#   /Users/otaviof/.zshrc:zshrc
+#
+/Users/otaviof/.zshrc:zshrc
+/Users/otaviof/.zlogin:zlogin
+/Users/otaviof/.zlogout:zlogout
+/Users/otaviof/.zprofile:zprofile
+/Users/otaviof/.zshenv:zshenv
+/Users/otaviof/.zshrc:zshrc
+# EOF
