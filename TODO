@@ -1,9 +1,1 @@
-1) Install (Makefile?) scripts using this repo as base:
-    1.1) How to deploy this files? Maybe using Python be a good way (learn
-         something as well);
-2) Features by SOs (OSX, FreeBSD and Linux -- debian-like):
-    * Alias (Booking's related ones);
-    * Man2Vim (on and off states);
-    * PATH (one by SO);
-3) How call features separately?;
-4) How to configure where to install files?;
+# EOF
