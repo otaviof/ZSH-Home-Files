@@ -1,4 +1,5 @@
 # ~/.zshenv
+# github.com/otaviof/ZSH-Home-Files
 
 # Fixing Hostname and setenv  ENVs
 export     HOST=$(cat /etc/hosts |grep '^127.0.0.1' |awk '{print $3}')
@@ -7,6 +8,7 @@ export   EDITOR="mvim -f"
 export HISTFILE="$HOME/.histfile"
 export HISTSIZE=500000
 export SAVEHIST=500000
+export    PAGER="vimpager"
 
 # Display last commits in git_diff alias (~/.zprofile)
 export LAST_COMMITS=10
@@ -30,6 +32,13 @@ source $HOME/.github
 RVM="$HOME/.rvm/scripts/rvm"
 if [ -e $RVM ]; then
     source $RVM
+fi
+
+# Python VirtualEnv (default: v2.7)
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+PY_ENV="$HOME/.py27/bin/activate"
+if [ -e $PY_ENV ] ;then
+    source $PY_ENV
 fi
 
 # System-wide environment settings for ZSH

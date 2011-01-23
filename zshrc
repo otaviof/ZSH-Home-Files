@@ -1,28 +1,36 @@
 # ~/.zshrc
+# github.com/otaviof/ZSH-Home-Files
+
+autoload -U ~/.zsh/completion/*(:t)
+autoload -Uz compinit
+autoload -U colors
+
+compinit -u
 
 # ----------------------------------------------------------------------------
 # Functions to display docs inside Vim (MacVim)
 # ----------------------------------------------------------------------------
 
-function display_manpage() {
-    mvim  \
-        -R \
+function _manpage() {
+    local PAGER=""
+    mvim -R \
         -c "Man ${*}" \
         -c "silent! only" \
         -c "let no_plugin_maps=1" \
-        -c "colors blackboard" \
-        -c "set ic nu lines=50 co=110"
+        -c "colors xoria256" \
+        -c "set ic nu lines=50 co=110 nolist transparency=10"
 }
 
-function display_perldoc() {
-    mvim \
-        -R \
-        -c "silent! only" \
-        -c "Perldoc ${*}" \
+function _perldoc() {
+    local PAGER=""
+    mvim -R \
+        -c 'silent! only' \
         -c 'let Perldoc_path="."' \
-        -c "setf perldoc" \
-        -c "let no_plugin_maps=1" \
-        -c "set ic nu lines=50 co=110"
+        -c "Perldoc ${*}" \
+        -c "colors xoria256" \
+        -c 'setf perldoc' \
+        -c 'set ic nu lines=50 co=110 nolist transparency=10' \
+        -c 'let no_plugin_maps=1'
 }
 
 function git_prompt_info() {
@@ -54,38 +62,39 @@ freload() {
 # "Hooks" for man commands
 # ----------------------------------------------------------------------------
 
+# TODO you need a better setup for man-pages and so forth
 if [[ $OSTYPE == "darwin10.0" ]]; then
 
-    man() {
-        [[ $# -eq 0 ]] && return 1
-        display_manpage $*
-    }
+    # man() {
+    #     [[ $# -eq 0 ]] && return 1
+    #     _manpage $*
+    # }
 
-    info() {
-        [[ $# -eq 1 ]] || return 1
-        display_manpage "${1}.i"
-    }
+    # info() {
+    #     [[ $# -eq 1 ]] || return 1
+    #     _manpage "${1}.i"
+    # }
 
-    perldoc() {
-        if [[ $# -eq 0 ]]; then
-            /usr/bin/perldoc
-            return
-        fi
-
-        if [[ $1 == '-f' ]]; then
-            MAN="$2.pl -f"
-        else
-            MAN=$1
-        fi
-
-        if [[ -f $MAN ]]; then
-            echo "Operning a given file name: $MAN"
-            /usr/bin/perldoc "$MAN"
-            return
-        fi
-
-        display_manpage "${MAN}"
-    }
+    # perldoc() {
+    #     if [[ $# -eq 0 ]]; then
+    #         /usr/bin/perldoc
+    #         return
+    #     fi
+    #
+    #     if [[ $1 == '-f' ]]; then
+    #         MAN="$2.pl -f"
+    #     else
+    #         MAN=$1
+    #     fi
+    #
+    #     if [[ -f $MAN ]]; then
+    #         echo "Operning a given file name: $MAN"
+    #         /usr/bin/perldoc "$MAN"
+    #         return
+    #     fi
+    #
+    #     _manpage "${MAN}"
+    # }
 
 fi
 
@@ -174,15 +183,6 @@ zstyle ':completion:*:functions' \
 zstyle ':completion:*:*:*:users' \
     ignored-patterns '_*'
 
-# completions environment path
-fpath=(~/.zsh/completion/ $fpath)
-
-autoload -U ~/.zsh/completion/*(:t)
-autoload -Uz compinit
-autoload -U colors
-
-compinit -u
-
 # ----------------------------------------------------------------------------
 # Command Prompt
 # ----------------------------------------------------------------------------
@@ -206,7 +206,9 @@ bindkey "^[[B" history-search-forward
 # Language
 # ----------------------------------------------------------------------------
 
-setenv LANG "en_US.UTF-8"
+fpath=(~/.zsh/completion/ $fpath)
 typeset -U path cdpath fpath manpath
+
+setenv LANG "en_US.UTF-8"
 
 # EOF

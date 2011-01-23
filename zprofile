@@ -1,4 +1,5 @@
 # ~/.profile
+# github.com/otaviof/ZSH-Home-Files
 
 alias ..='cd ..'
 alias chmod='chmod -v'
@@ -25,7 +26,7 @@ alias kill_xmldev="ps aux |ack 'ssh xmldev' |awk '{print \$2}' |xargs kill"
 # SO Specific
 #
 
-if [[ $OSTYPE == "darwin10.0" ]]; then
+if [[ $OSTYPE == "darwin10.6.0" ]]; then
 
     #
     # Mac OS X
@@ -47,6 +48,8 @@ if [[ $OSTYPE == "darwin10.0" ]]; then
     alias l.='ls -FG -d .*'
     alias ll='ls -FG -lh '
     alias ls='ls -FG '
+
+    alias less='vimpager'
 
     alias md5sum='md5'
 
