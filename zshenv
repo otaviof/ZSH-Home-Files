@@ -2,8 +2,8 @@
 # github.com/otaviof/ZSH-Home-Files
 
 # Fixing Hostname and setenv  ENVs
-export     HOST=$(cat /etc/hosts |grep '^127.0.0.1' |awk '{print $3}')
-export     TERM="xterm"
+export     HOST=$(head -n 5 /etc/hosts |grep '^127' |awk '{print $3}')
+export     TERM="rxvt"
 export   EDITOR="mvim -f"
 export HISTFILE="$HOME/.histfile"
 export HISTSIZE=500000
@@ -53,8 +53,8 @@ fi
 export   PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
 export MODULEBUILDRC="$HOME/perl5/.modulebuildrc"
 
-if [[ $OSTYPE == "darwin10.0" ]]; then
-    PERL5LIB="$HOME/perl5/lib/perl5:$HOME/perl5/lib/perl5/darwin-thread-multi-2level"
+if [[ $OSTYPE == "darwin10.0" || $OSTYPE == "darwin10.6.0" ]]; then
+    PERL5LIB="$HOME/D/P/B/main/lib:$HOME/perl5/lib/perl5:$HOME/perl5/lib/perl5/darwin-thread-multi-2level"
 else
     PERL5LIB="$HOME/perl5/lib/perl5:$HOME/perl5/lib/perl5/x86_64-linux-gnu-thread-multi"
 fi

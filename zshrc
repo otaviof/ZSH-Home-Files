@@ -8,30 +8,8 @@ autoload -U colors
 compinit -u
 
 # ----------------------------------------------------------------------------
-# Functions to display docs inside Vim (MacVim)
+# -- Misc Methods:
 # ----------------------------------------------------------------------------
-
-function _manpage() {
-    local PAGER=""
-    mvim -R \
-        -c "Man ${*}" \
-        -c "silent! only" \
-        -c "let no_plugin_maps=1" \
-        -c "colors xoria256" \
-        -c "set ic nu lines=50 co=110 nolist transparency=10"
-}
-
-function _perldoc() {
-    local PAGER=""
-    mvim -R \
-        -c 'silent! only' \
-        -c 'let Perldoc_path="."' \
-        -c "Perldoc ${*}" \
-        -c "colors xoria256" \
-        -c 'setf perldoc' \
-        -c 'set ic nu lines=50 co=110 nolist transparency=10' \
-        -c 'let no_plugin_maps=1'
-}
 
 function git_prompt_info() {
     sudo git branch --no-color 2> /dev/null \
@@ -43,7 +21,7 @@ function dig_hosts {
 }
 
 # ----------------------------------------------------------------------------
-# Compatibility Issues
+# -- Compatibility Issues:
 # ----------------------------------------------------------------------------
 
 setenv() {
@@ -59,47 +37,7 @@ freload() {
 }
 
 # ----------------------------------------------------------------------------
-# "Hooks" for man commands
-# ----------------------------------------------------------------------------
-
-# TODO you need a better setup for man-pages and so forth
-if [[ $OSTYPE == "darwin10.0" ]]; then
-
-    # man() {
-    #     [[ $# -eq 0 ]] && return 1
-    #     _manpage $*
-    # }
-
-    # info() {
-    #     [[ $# -eq 1 ]] || return 1
-    #     _manpage "${1}.i"
-    # }
-
-    # perldoc() {
-    #     if [[ $# -eq 0 ]]; then
-    #         /usr/bin/perldoc
-    #         return
-    #     fi
-    #
-    #     if [[ $1 == '-f' ]]; then
-    #         MAN="$2.pl -f"
-    #     else
-    #         MAN=$1
-    #     fi
-    #
-    #     if [[ -f $MAN ]]; then
-    #         echo "Operning a given file name: $MAN"
-    #         /usr/bin/perldoc "$MAN"
-    #         return
-    #     fi
-    #
-    #     _manpage "${MAN}"
-    # }
-
-fi
-
-# ----------------------------------------------------------------------------
-# Completion options
+# -- Completion options:
 # ----------------------------------------------------------------------------
 
 setopt all_export
@@ -142,7 +80,7 @@ unsetopt bg_nice
 unsetopt listambiguous
 
 # ----------------------------------------------------------------------------
-# ZSH Completion
+# -- ZSH Completion:
 # ----------------------------------------------------------------------------
 
 zstyle ':completion:*' \
@@ -184,13 +122,13 @@ zstyle ':completion:*:*:*:users' \
     ignored-patterns '_*'
 
 # ----------------------------------------------------------------------------
-# Command Prompt
+# -- Command Prompt:
 # ----------------------------------------------------------------------------
 
 colors && PROMPT=$'%n%{$fg[red]%}@%{$reset_color%}%m:%{$fg[yellow]%}%~%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}%(#.#.$)%{$reset_color%} '
 
 # ----------------------------------------------------------------------------
-# Vim Mode
+# -- Vim Mode:
 # ----------------------------------------------------------------------------
 
 bindkey -v
@@ -203,12 +141,33 @@ bindkey "^[[A" history-search-backward
 bindkey "^[[B" history-search-forward
 
 # ----------------------------------------------------------------------------
-# Language
+# -- Language:
 # ----------------------------------------------------------------------------
 
 fpath=(~/.zsh/completion/ $fpath)
 typeset -U path cdpath fpath manpath
 
 setenv LANG "en_US.UTF-8"
+
+# ----------------------------------------------------------------------------
+# -- Window title:
+# ----------------------------------------------------------------------------
+
+case $TERM in
+    *xterm*|rxvt|rxvt-unicode|rxvt-256color|rxvt-unicode-256color|(dt|k|E)term)
+        precmd ()  { print -Pn "\e]0;%M: %~\a" }
+        preexec () { print -Pn "\e]0;%M: %~ $1\a" }
+    ;;
+    screen)
+        precmd () {
+            print -Pn "\e]83;title \"$1\"\a"
+            print -Pn "\e]0;$TERM - (%L) %M: %~\a"
+        }
+        preexec () {
+            print -Pn "\e]83;title \"$1\"\a"
+            print -Pn "\e]0;$TERM - (%L) %M: %~ $1\a"
+        }
+    ;;
+esac
 
 # EOF

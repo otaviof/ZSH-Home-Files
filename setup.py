@@ -12,18 +12,25 @@ import time
 import shutil
 import filecmp
 
+
 def help():
     print """
-%(arg0)s -- Very simple manager for ZSH config files
+%(arg0)s -- Very simple manager for ZSH config-files
+
+This script reads data from local MANIFEST text file (obviously ignoring any
+comments), to know which files it should track down. For copying files down and
+moving up to your home folder, will be guided throughout MANIFEST.
 
 Actions:
-    * "install"  Copy all ZSH's local files (on the same dir of this script)
-                 to your home folder;
-    * "copy"     Copy your ZSH's files to this directory;
+  * "install"  Copy all ZSH's local files (on the same directory of this
+               script) to your home folder;
+  * "copy"     Copy your ZSH's files to this directory;
+
+All actions test first if the files are really different.
 
 Usage:
-    $ %(arg0)s install
-    $ %(arg0)s copy
+  $ %(arg0)s install
+  $ %(arg0)s copy
 """ % { 'arg0': sys.argv[0] }
     sys.exit()
 
@@ -57,18 +64,28 @@ def conditional_copy(o,d,backup_suffix):
     is_equal = filecmp.cmp(o, d)
     if not is_equal:
         if backup_suffix:
-            copy(d, "%s.%s" % (d, backup_suffix))
+            copy(d, "/var/tmp/%s.%s" % (os.path.basename(d), backup_suffix))
         copy(o, d)
     else:
-        print "Not copying: is_equal(%d)" % (is_equal)
+        print "\tNot copying: is_equal(%d)" % (is_equal)
 
 def copy(o,d):
     """A simple wrapper for copy a file"""
-    print "Copying: %s, %s" % (o, d)
+    print "\tCopying: %s, %s" % (o, d)
     try:
         shutil.copyfile(o, d)
     except ( IOError, os.error ), why:
         raise ValueError("Error during copy %s to %s: %s" % (o, d, why))
+
+#
+# TODO  accept an argument like --copy (cp|scp)
+#        include documentation (pydoc)
+#        send throughout ssh
+#       # .zshprofile should test OSTYPE as "darwin10.0" or "darwin10.6.0"
+#       #   alias for 'ls' and other ones
+#
+#       test options in a better way (getopt), be more flexible
+#
 
 def main():
     setup_action = parse_action()
@@ -76,7 +93,7 @@ def main():
     suffix       = time.strftime("%Y%m%d%H%M%S")
 
     for l, r in zsh_files.iteritems():
-        print "L: '%s' R: '%s'" % ( l, r )
+        print "'%s' --> '%s'" % ( l, r )
 
         # boilerplating the enviroment
         if not os.path.isfile(l):

@@ -26,7 +26,8 @@ alias kill_xmldev="ps aux |ack 'ssh xmldev' |awk '{print \$2}' |xargs kill"
 # SO Specific
 #
 
-if [[ $OSTYPE == "darwin10.6.0" ]]; then
+
+if [[ $OSTYPE == "darwin10.0" || $OSTYPE == "darwin10.6.0" ]]; then
 
     #
     # Mac OS X
@@ -40,7 +41,7 @@ if [[ $OSTYPE == "darwin10.6.0" ]]; then
         |xargs -n 2 git diff -R \
         |mvimdiff -R -c 'colorscheme blackboard' -c 'set ic' - > /dev/null 2>&1"
 
-    alias gitx='GitX . > /dev/null 2>&1 &'
+    alias gitx='/usr/local/bin/gitx --local -250'
     alias gvim='mvim'
 
     alias hosts="sudo mvim /etc/hosts"
