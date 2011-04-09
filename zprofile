@@ -1,4 +1,4 @@
-# ~/.profile
+# ~/.zprofile
 # github.com/otaviof/ZSH-Home-Files
 
 alias ..='cd ..'
@@ -8,9 +8,10 @@ alias cp='cp -iv'
 alias ff='find ./ -iname $*'
 alias mv='mv -iv'
 alias rm='rm -iv'
+alias perldoc='perldoc -t'
 
 # ---------------------------------------------------------------------------
-# Booking's
+# -- Booking's:
 #
 
 alias set_http_proxy="eval $(cat ~/.zshenv |grep -i '_proxy')"
@@ -23,7 +24,7 @@ alias kill_blackhack="ps aux |ack 'ssh blackhawk' |awk '{print \$2}' |xargs kill
 alias kill_xmldev="ps aux |ack 'ssh xmldev' |awk '{print \$2}' |xargs kill"
 
 # ---------------------------------------------------------------------------
-# SO Specific
+# -- SO Specific:
 #
 
 
