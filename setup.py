@@ -11,26 +11,63 @@ import sys
 import time
 import shutil
 import filecmp
+import getopt
 
 
 def help():
     print """
-%(arg0)s -- Very simple manager for ZSH config-files
+##
+## %(arg0)s -- Very simple manager for ZSH config-files
+##
 
-This script reads data from local MANIFEST text file (obviously ignoring any
-comments), to know which files it should track down. For copying files down and
-moving up to your home folder, will be guided throughout MANIFEST.
+This simple python script aims you to copy and maintain ZSH files in a
+different folder, like this GitHub's project shows. Using another place is
+handful specially if you're using Git, and want some focus in your ZSH files.
 
-Actions:
-  * "install"  Copy all ZSH's local files (on the same directory of this
-               script) to your home folder;
-  * "copy"     Copy your ZSH's files to this directory;
+So basically this script reads "MANIFEST" text file (it must be on the same
+folder of this script), and in this file we have an placeholder expression to
+follow, so please consider own help of MANIFEST file:
 
-All actions test first if the files are really different.
+    #
+    # This file is the _manifest_ of all ZSH's related files on your system
+    # that you want to maintain with this simple helper. Here is the place to
+    # point them all, but first you must be aware about placeholders:
+    #
+    # Placeholeders:
+    #   <full_path_to_file>:<local_filename>
+    #
+    # i.e.:
+    #   /Users/otaviof/.zshrc:zshrc
+    #   /Users/otaviof/.zlogin:zlogin
+    #
 
-Usage:
-  $ %(arg0)s install
-  $ %(arg0)s copy
+And all reason for this steps is supporting actions to help you on manintain
+your ZSH files:
+
+##
+## Actions:
+##
+
+  * --push  Copy all ZSH's local files (on the same directory of this script)
+            to your home folder following MANIFEST;
+
+  * --pull  Copy your ZSH's files to this directory;
+
+  * --scp   Copy your ZSH's files a remote server, via SCP. And this option
+            needs an extra parameter, your SSH host. I.e.:
+
+            %(arg0)s --scp myhost.com              # trust in ~/.ssh/config
+
+All actions test first if files are really different between origin and
+destiny, if not it will be just logged as non necessary action.
+
+##
+## Usage:
+##
+
+    $ %(arg0)s --push
+    $ %(arg0)s --copy
+    $ %(arg0)s --scp myhost.com
 """ % { 'arg0': sys.argv[0] }
     sys.exit()
 
@@ -49,15 +86,27 @@ def manifest():
         raise err
     return zsh_files
 
-def parse_action():
-    """Just looking for default arguments, or calling help()"""
-    if ( sys.argv.__len__() < 2 or
-       ( sys.argv[1] != "install" and
-         sys.argv[1] != "copy"
-       ) ):
-        help()
-        sys.exit()
-    return sys.argv[1]
+def copy(o,d):
+    """A simple wrapper for copy a file"""
+    print "\tCopying: %s, %s" % (o, d)
+    try:
+        shutil.copyfile(o, d)
+    except ( IOError, os.error ), why:
+        raise ValueError("Error during copy %s to %s: %s" % (o, d, why))
+
+def boilerplate(left, right):
+    """Take list of files described in MANIFEST and make sure we have them in
+       both sides, left (external this directory) and right (here!)"""
+    if not os.path.isfile(left):
+        raise ValueError("File not found: %s" % left)
+    if not os.path.isfile(right):
+        copy(left, right)
+
+def pull(left, right, suffix=None, other_arguments=None):
+    conditional_copy(left, right, None)
+
+def push(left, right, suffix, other_arguments=None):
+    conditional_copy(right, left, suffix)
 
 def conditional_copy(o,d,backup_suffix):
     """Just copy files that are different than original"""
@@ -69,43 +118,71 @@ def conditional_copy(o,d,backup_suffix):
     else:
         print "\tNot copying: is_equal(%d)" % (is_equal)
 
-def copy(o,d):
-    """A simple wrapper for copy a file"""
-    print "\tCopying: %s, %s" % (o, d)
+def scp(left, right, suffix, other_arguments):
+    """Wrap up SCP command"""
+    if os.system('scp "%s" "%s:~/.%s"' % (right, other_arguments, right) ) == 0:
+        print "Copied to %s via SCP" % other_arguments
+    else:
+        raise ValueError("Errors during SCP (%s to %s)." % right,
+                other_arguments )
+
+def parse_actions():
+    """Using getopts to understand command line options and fire up help when
+       necessary"""
     try:
-        shutil.copyfile(o, d)
-    except ( IOError, os.error ), why:
-        raise ValueError("Error during copy %s to %s: %s" % (o, d, why))
+        opts, args = getopt.getopt(
+            sys.argv[1:],
+            'pull:push:scp:help',
+            [ 'pull', 'push', 'scp', 'help' ]
+        )
+    except getopt.GetoptError, err:
+        print str(err)
+        help()
+        sys.exit(2)
+
+    # parsing the first argument, and cleaning it up
+    first_argument = None
+    if not opts[0][0]:
+        help()
+    else:
+        first_argument = (str(opts[0][0])).replace('-', '')
+
+    other_arguments = None
+    if args and args[0]:
+        other_arguments = str(args[0])
+
+    # do we need to show help?
+    help_pattern = re.compile(r'help')
+    if not opts or help_pattern.match(first_argument):
+        help()
+
+    return [ first_argument, other_arguments ]
 
 #
-# TODO  accept an argument like --copy (cp|scp)
-#        include documentation (pydoc)
-#        send throughout ssh
-#       # .zshprofile should test OSTYPE as "darwin10.0" or "darwin10.6.0"
-#       #   alias for 'ls' and other ones
-#
-#       test options in a better way (getopt), be more flexible
+# Main
 #
 
 def main():
-    setup_action = parse_action()
-    zsh_files    = manifest()
-    suffix       = time.strftime("%Y%m%d%H%M%S")
+    first_argument, other_arguments = parse_actions()
+    suffix = time.strftime("%Y%m%d%H%M%S")
 
-    for l, r in zsh_files.iteritems():
-        print "'%s' --> '%s'" % ( l, r )
+    # describing all possible options to this script
+    actions = {
+        "push": push,
+        "pull": pull,
+        "scp" : scp,
+    }
 
-        # boilerplating the enviroment
-        if not os.path.isfile(l):
-            raise ValueError("File not found: %s" % (l))
-        if not os.path.isfile(r):
-            copy(l, r)
-
-        # get the job done!
-        if setup_action == "install":
-            conditional_copy(r, l, suffix)
-        if setup_action == "copy":
-            conditional_copy(l, r, None)
+    for left, right in manifest().iteritems():
+        print "Left: %s, Right: %s" % (left, right)
+        boilerplate(left, right)
+        # using dictionary above to call methods
+        actions.get(first_argument, help)(
+                left,
+                right,
+                suffix,
+                other_arguments
+        )
 
 if __name__ == '__main__':
     main()

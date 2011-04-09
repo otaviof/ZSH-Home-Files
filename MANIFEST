@@ -4,7 +4,7 @@
 # all, but first you must be aware about placeholders:
 #
 # Placeholeders:
-#   <full path to file>:<local filename>
+#   <full_path_to_file>:<local_filename>
 #
 # i.e.:
 #   /Users/otaviof/.zshrc:zshrc
