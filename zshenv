@@ -8,7 +8,11 @@ export   EDITOR="mvim -f"
 export HISTFILE="$HOME/.histfile"
 export HISTSIZE=500000
 export SAVEHIST=500000
-export    PAGER="vimpager"
+
+# TODO: a better way do test if it's my mac or not
+if [[ $OSTYPE == "darwin10.0" || $OSTYPE == "darwin10.6.0" ]]; then
+    export PAGER="vimpager"
+fi
 
 # Display last commits in git_diff alias (~/.zprofile)
 export LAST_COMMITS=10
