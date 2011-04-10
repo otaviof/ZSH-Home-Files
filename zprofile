@@ -63,6 +63,9 @@ if [[ $OSTYPE == "darwin10.0" || $OSTYPE == "darwin10.6.0" ]]; then
     alias vi='vim'
     alias vimdiff='mvim -d'
 
+    # some terminal-candy to VirtualBox
+    alias tail_ubuntu_vm="tail -F $HOME/Documents/Virtual\ Machines.localized/Ubuntu\ Server/Logs/VBox.log"
+
 elif [[ $OSTYPE == "linux-gnu" ]]; then
 
     #
