@@ -66,7 +66,7 @@ destiny, if not it will be just logged as non necessary action.
 ##
 
     $ %(arg0)s --push
-    $ %(arg0)s --copy
+    $ %(arg0)s --pull
     $ %(arg0)s --scp myhost.com
 """ % { 'arg0': sys.argv[0] }
     sys.exit()
@@ -142,7 +142,7 @@ def parse_actions():
 
     # parsing the first argument, and cleaning it up
     first_argument = None
-    if not opts[0][0]:
+    if not opts or not opts[0][0]:
         help()
     else:
         first_argument = (str(opts[0][0])).replace('-', '')
@@ -163,6 +163,8 @@ def parse_actions():
 #
 
 def main():
+    # parsing command line options, first of all, and during this process we
+    # check is is more appropriated showing help text instead
     first_argument, other_arguments = parse_actions()
     suffix = time.strftime("%Y%m%d%H%M%S")
 
@@ -176,12 +178,13 @@ def main():
     for left, right in manifest().iteritems():
         print "Left: %s, Right: %s" % (left, right)
         boilerplate(left, right)
-        # using dictionary above to call methods
+
+        # using dictionary above to call specific actions, or help method
         actions.get(first_argument, help)(
-                left,
-                right,
-                suffix,
-                other_arguments
+            left,
+            right,
+            suffix,
+            other_arguments
         )
 
 if __name__ == '__main__':
