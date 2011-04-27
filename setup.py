@@ -115,7 +115,7 @@ def git_add(file_name, repo_dir=os.curdir):
     pipe.wait()
     return
 
-def git_commit(message=time.time, repo_dir=os.curdir):
+def git_commit(message, repo_dir=os.curdir):
     cmd = 'git commit -m \'' + message + '\''
     pipe = subprocess.Popen(cmd, shell=True, cwd=repo_dir)
     pipe.wait()
@@ -207,7 +207,7 @@ def main():
             other_arguments
         )
 
-    git_commit()
+    git_commit(str(time.time()))
 
 if __name__ == '__main__':
     main()
