@@ -12,7 +12,7 @@ compinit -u
 # ----------------------------------------------------------------------------
 
 function git_prompt_info() {
-    sudo git branch --no-color 2> /dev/null \
+    git branch --no-color 2> /dev/null \
         |sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 

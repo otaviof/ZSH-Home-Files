@@ -10,8 +10,10 @@ export HISTSIZE=500000
 export SAVEHIST=500000
 
 # TODO: a better way do test if it's my mac or not
-if [[ $OSTYPE == "darwin10.0" || $OSTYPE == "darwin10.6.0" ]]; then
+if [[ -z "$SSH_CONNECTION" && $OSTYPE == "darwin10.6.0" ]]; then
     export PAGER="vimpager"
+    # avoid build for other archs
+    export ARCHFLAGS="-arch x86_64" # -arch i386 -arch x86_64 -arch ppc
 fi
 
 # Display last commits in git_diff alias (~/.zprofile)
@@ -42,6 +44,7 @@ fi
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 PY_ENV="$HOME/.py27/bin/activate"
 if [ -e $PY_ENV ] ;then
+    echo "Sourcing this famous $PY_ENV"
     source $PY_ENV
 fi
 
@@ -57,7 +60,7 @@ fi
 export   PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
 export MODULEBUILDRC="$HOME/perl5/.modulebuildrc"
 
-if [[ $OSTYPE == "darwin10.0" || $OSTYPE == "darwin10.6.0" ]]; then
+if [[ $OSTYPE == "darwin10.6.0" ]]; then
     PERL5LIB="$HOME/D/P/B/main/lib:$HOME/perl5/lib/perl5:$HOME/perl5/lib/perl5/darwin-thread-multi-2level"
 else
     PERL5LIB="$HOME/perl5/lib/perl5:$HOME/perl5/lib/perl5/x86_64-linux-gnu-thread-multi"

@@ -12,6 +12,13 @@ import time
 import shutil
 import filecmp
 import getopt
+import subprocess
+
+#
+# TODO:
+#   - commit on local git repository every time you copied a file from
+#     otherside to here;
+#
 
 
 def help():
@@ -102,8 +109,21 @@ def boilerplate(left, right):
     if not os.path.isfile(right):
         copy(left, right)
 
+def git_add(file_name, repo_dir=os.curdir):
+    cmd  = 'git add ' + file_name
+    pipe = subprocess.Popen(cmd, shell=True, cwd=repo_dir)
+    pipe.wait()
+    return
+
+def git_commit(message=time.time, repo_dir=os.curdir):
+    cmd = 'git commit -m \'' + message + '\''
+    pipe = subprocess.Popen(cmd, shell=True, cwd=repo_dir)
+    pipe.wait()
+    return
+
 def pull(left, right, suffix=None, other_arguments=None):
     conditional_copy(left, right, None)
+    git_add(right)
 
 def push(left, right, suffix, other_arguments=None):
     conditional_copy(right, left, suffix)
@@ -186,6 +206,8 @@ def main():
             suffix,
             other_arguments
         )
+
+    git_commit()
 
 if __name__ == '__main__':
     main()
