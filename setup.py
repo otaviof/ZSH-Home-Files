@@ -207,7 +207,9 @@ def main():
             other_arguments
         )
 
+    # even if we don't have any changes to commit this command will remain
     git_commit(str(time.time()))
+
 
 if __name__ == '__main__':
     main()
