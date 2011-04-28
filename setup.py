@@ -14,12 +14,6 @@ import filecmp
 import getopt
 import subprocess
 
-#
-# TODO:
-#   - commit on local git repository every time you copied a file from
-#     otherside to here;
-#
-
 
 def help():
     print """
@@ -207,8 +201,8 @@ def main():
             other_arguments
         )
 
-    # even if we don't have any changes to commit this command will remain
-    git_commit(str(time.time()))
+    if first_argument == "pull":
+        git_commit(str(time.time()))
 
 
 if __name__ == '__main__':

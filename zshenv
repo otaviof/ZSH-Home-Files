@@ -34,24 +34,16 @@ export  MYVIMRC="$HOME/.vim/vimrc"
 # GitHub API's Token
 source $HOME/.github
 
-# RVM (Ruby)
-RVM="$HOME/.rvm/scripts/rvm"
-if [ -e $RVM ]; then
-    source $RVM
-fi
-
-# Python VirtualEnv (default: v2.7)
-export VIRTUAL_ENV_DISABLE_PROMPT=1
-PY_ENV="$HOME/.py27/bin/activate"
-if [ -e $PY_ENV ] ;then
-    echo "Sourcing this famous $PY_ENV"
-    source $PY_ENV
-fi
-
+#
 # System-wide environment settings for ZSH
-if [ -x /usr/libexec/path_helper ]; then
-    eval $( /usr/libexec/path_helper -s )
-fi
+#
+# FIXME:
+#   - in first place this path_helper should be called from /etc/zshenv, but
+#     for some awkward reason it's not being true;
+#
+
+[[ -x '/usr/libexec/path_helper' ]] && \
+    eval "$(/usr/libexec/path_helper -s)"
 
 #
 # Perl's Local Lib
