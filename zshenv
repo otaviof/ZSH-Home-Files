@@ -1,6 +1,15 @@
 # ~/.zshenv
 # github.com/otaviof/ZSH-Home-Files
 
+# defining a simpler OSTYPE
+if [[ -n "$OSTYPE" ]]; then
+    if ( expr "$OSTYPE" : 'darwin' > /dev/null ); then
+        export _OSTYPE="darwin"
+    elif ( expr "$OSTYPE" : 'linux' > /dev/null ); then
+        export _OSTYPE="linux"
+    fi
+fi
+
 # Fixing Hostname and setenv  ENVs
 export     HOST=$(head -n 5 /etc/hosts |grep '^127' |awk '{print $3}')
 export     TERM="rxvt"
@@ -10,10 +19,12 @@ export HISTSIZE=500000
 export SAVEHIST=500000
 
 # TODO: a better way do test if it's my mac or not
-if [[ -z "$SSH_CONNECTION" && $OSTYPE == "darwin10.6.0" ]]; then
+if [[ -z "$SSH_CONNECTION" && $_OSTYPE == "darwin" ]]; then
     export PAGER="vimpager"
     # avoid build for other archs
     export ARCHFLAGS="-arch x86_64" # -arch i386 -arch x86_64 -arch ppc
+    # network location
+    export OSX_NETWORK_LOCATION=$(scselect 2>&1 |egrep '^ \* ' |sed 's/.*(\(.*\))/\1/;')
 fi
 
 # Display last commits in git_diff alias (~/.zprofile)
@@ -23,10 +34,12 @@ export LAST_COMMITS=10
 export VIM_APP_DIR="/Applications"
 
 # Booking's Proxy
-export BOOKINGS_PROXY="http://webproxy.corp.booking.com:3128"
-export      ftp_proxy=$BOOKINGS_PROXY
-export     http_proxy=$BOOKINGS_PROXY
-export    https_proxy=$BOOKINGS_PROXY
+if [[ "$OSX_NETWORK_LOCATION" != "Home" ]]; then
+    export BOOKINGS_PROXY="http://webproxy.corp.booking.com:3128"
+    export      ftp_proxy=$BOOKINGS_PROXY
+    export     http_proxy=$BOOKINGS_PROXY
+    export    https_proxy=$BOOKINGS_PROXY
+fi
 
 # VimRC Path
 export  MYVIMRC="$HOME/.vim/vimrc"
@@ -52,7 +65,7 @@ source $HOME/.github
 export   PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
 export MODULEBUILDRC="$HOME/perl5/.modulebuildrc"
 
-if [[ $OSTYPE == "darwin10.6.0" ]]; then
+if [[ $_OSTYPE == "darwin" ]]; then
     PERL5LIB="$HOME/D/P/B/main/lib:$HOME/perl5/lib/perl5:$HOME/perl5/lib/perl5/darwin-thread-multi-2level"
 else
     PERL5LIB="$HOME/perl5/lib/perl5:$HOME/perl5/lib/perl5/x86_64-linux-gnu-thread-multi"

@@ -28,7 +28,7 @@ alias kill_xmldev="ps aux |ack 'ssh xmldev' |awk '{print \$2}' |xargs kill"
 #
 
 
-if [[ $OSTYPE == "darwin10.0" || $OSTYPE == "darwin10.6.0" ]]; then
+if [[ $_OSTYPE == "darwin" ]]; then
 
     #
     # Mac OS X
@@ -66,7 +66,7 @@ if [[ $OSTYPE == "darwin10.0" || $OSTYPE == "darwin10.6.0" ]]; then
     # some terminal-candy to VirtualBox
     alias tail_ubuntu_vm="tail -F $HOME/Documents/Virtual\ Machines.localized/Ubuntu\ Server/Logs/VBox.log"
 
-elif [[ $OSTYPE == "linux-gnu" ]]; then
+elif [[ $_OSTYPE == "linux" ]]; then
 
     #
     # GNU/Linux

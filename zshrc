@@ -1,6 +1,11 @@
 # ~/.zshrc
 # github.com/otaviof/ZSH-Home-Files
 
+fpath=(
+    ${HOME}/.zsh/completion/
+    ${fpath}
+)
+
 autoload -U ~/.zsh/completion/*(:t)
 autoload -Uz compinit
 autoload -U colors
@@ -143,9 +148,6 @@ bindkey "^[[B" history-search-forward
 # ----------------------------------------------------------------------------
 # -- Language:
 # ----------------------------------------------------------------------------
-
-fpath=(~/.zsh/completion/ $fpath)
-typeset -U path cdpath fpath manpath
 
 setenv LANG "en_US.UTF-8"
 
