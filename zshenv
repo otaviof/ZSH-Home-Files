@@ -33,14 +33,6 @@ export LAST_COMMITS=10
 # MacVim's mvim helper
 export VIM_APP_DIR="/Applications"
 
-# Booking's Proxy
-if [[ "$OSX_NETWORK_LOCATION" != "Home" ]]; then
-    export BOOKINGS_PROXY="http://webproxy.corp.booking.com:3128"
-    export      ftp_proxy=$BOOKINGS_PROXY
-    export     http_proxy=$BOOKINGS_PROXY
-    export    https_proxy=$BOOKINGS_PROXY
-fi
-
 # VimRC Path
 export  MYVIMRC="$HOME/.vim/vimrc"
 

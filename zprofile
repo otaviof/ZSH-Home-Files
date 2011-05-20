@@ -18,7 +18,7 @@ alias set_http_proxy="eval $(cat ~/.zshenv |grep -i '_proxy')"
 alias unset_http_proxy=" \
     eval $(cat ~/.zshenv \
            |grep -i '_proxy' \
-           |sed 's/^export //g; s/ //g;' \
+           |sed 's/export //g; s/ //g;' \
            |awk -F '=' '{print "unset "$1}')"
 alias kill_blackhack="ps aux |ack 'ssh blackhawk' |awk '{print \$2}' |xargs kill"
 alias kill_xmldev="ps aux |ack 'ssh xmldev' |awk '{print \$2}' |xargs kill"
