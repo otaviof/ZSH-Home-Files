@@ -64,7 +64,7 @@ if [[ $_OSTYPE == "darwin" ]]; then
     alias vimdiff='mvim -d'
 
     # some terminal-candy to VirtualBox
-    alias tail_ubuntu_vm="tail -F $HOME/Documents/Virtual\ Machines.localized/Ubuntu\ Server/Logs/VBox.log"
+    alias tail_ubuntu_vm="tail -F $HOME/VirtualBox\ VMs/void/Logs/VBox.log"
 
 elif [[ $_OSTYPE == "linux" ]]; then
 
