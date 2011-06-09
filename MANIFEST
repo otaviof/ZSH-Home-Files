@@ -7,17 +7,17 @@
 #   <full_path_to_file>:<local_filename>
 #
 # i.e.:
-#   /Users/otaviof/.zshrc:zshrc
-#   /Users/otaviof/.zlogin:zlogin
-#   /Users/otaviof/.zlogout:zlogout
-#   /Users/otaviof/.zprofile:zprofile
-#   /Users/otaviof/.zshenv:zshenv
-#   /Users/otaviof/.zshrc:zshrc
+#   /Users/ofernandes/.zshrc:zshrc
+#   /Users/ofernandes/.zlogin:zlogin
+#   /Users/ofernandes/.zlogout:zlogout
+#   /Users/ofernandes/.zprofile:zprofile
+#   /Users/ofernandes/.zshenv:zshenv
+#   /Users/ofernandes/.zshrc:zshrc
 #
-/Users/otaviof/.zshrc:zshrc
-/Users/otaviof/.zlogin:zlogin
-/Users/otaviof/.zlogout:zlogout
-/Users/otaviof/.zprofile:zprofile
-/Users/otaviof/.zshenv:zshenv
-/Users/otaviof/.zshrc:zshrc
+/Users/ofernandes/.zshrc:zshrc
+/Users/ofernandes/.zlogin:zlogin
+/Users/ofernandes/.zlogout:zlogout
+/Users/ofernandes/.zprofile:zprofile
+/Users/ofernandes/.zshenv:zshenv
+/Users/ofernandes/.zshrc:zshrc
 # EOF
