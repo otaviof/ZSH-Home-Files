@@ -1,1 +1,18 @@
+* Create "~/.github" empty file;
+* Copy/Manage "~/.zsh" directory as well;
+
+
+-- VM instalation:
+
+    * Change "/etc/hosts" to display the right hostname on PROMPT;
+    * Install:
+        * keychain;
+    * Sudo without password (edit "/etc/sudoers");
+
+
+
+-- Working Environment:
+
+    * Bash setup;
+
 # EOF
