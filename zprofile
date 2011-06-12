@@ -30,6 +30,9 @@ alias kill_xmldev="ps aux |ack 'ssh xmldev' |awk '{print \$2}' |xargs kill"
 
 if [[ $_OSTYPE == "darwin" ]]; then
 
+    compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app |sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
+    alias run='open -a'
+
     #
     # Mac OS X
     #

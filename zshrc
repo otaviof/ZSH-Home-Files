@@ -16,6 +16,10 @@ compinit -u
 # -- Misc Methods:
 # ----------------------------------------------------------------------------
 
+precmd () {
+    echo -n "\033]1;$USERNAME@$HOST^G\033]2;$PWD> - $USERNAME@$HOST ($status)"
+}
+
 function git_prompt_info() {
     git branch --no-color 2> /dev/null \
         |sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
@@ -130,7 +134,7 @@ zstyle ':completion:*:*:*:users' \
 # -- Command Prompt:
 # ----------------------------------------------------------------------------
 
-colors && PROMPT=$'%n%{$fg[red]%}@%{$reset_color%}%m:%{$fg[yellow]%}%~%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}%(#.#.$)%{$reset_color%} '
+colors && PROMPT=$'%n%{$fg[red]%}@%{$reset_color%}%m:%{$fg[yellow]%}%~%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}%(#.#.$)%{$reset_color%} ' && RPROMPT=''
 
 # ----------------------------------------------------------------------------
 # -- Vim Mode:
