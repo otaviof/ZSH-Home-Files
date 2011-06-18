@@ -56,14 +56,14 @@ setopt autocd
 setopt autolist
 setopt autopushd
 setopt autoresume
-setopt cdablevars
+setopt no_cdablevars
 setopt extended_glob
 setopt extended_history
 setopt extendedglob
 setopt globdots
 setopt hist_expire_dups_first
-setopt hist_ignore_space
 setopt hist_ignore_dups
+setopt hist_ignore_space
 setopt hist_reduce_blanks
 setopt hist_verify
 setopt histignoredups
