@@ -11,7 +11,6 @@ if [[ -n "$OSTYPE" ]]; then
 fi
 
 # Fixing Hostname and setenv  ENVs
-export     HOST=$(head -n 5 /etc/hosts |grep '^127' |awk '{print $3}')
 export     TERM="rxvt"
 export   EDITOR="mvim -f"
 export HISTFILE="$HOME/.histfile"
@@ -20,11 +19,16 @@ export SAVEHIST=500000
 
 # TODO: a better way do test if it's my mac or not
 if [[ -z "$SSH_CONNECTION" && $_OSTYPE == "darwin" ]]; then
+    export HOST=$(head -n 5 /etc/hosts |grep '^127' |awk '{print $3}')
+    # vim as pager
     export PAGER="vimpager"
     # avoid build for other archs
     export ARCHFLAGS="-arch x86_64" # -arch i386 -arch x86_64 -arch ppc
     # network location
     export OSX_NETWORK_LOCATION=$(scselect 2>&1 |egrep '^ \* ' |sed 's/.*(\(.*\))/\1/;')
+    # custom directory search (speed-up)
+    cdpath=(.. ../..)
+    export CDPATH
 fi
 
 # Display last commits in git_diff alias (~/.zprofile)

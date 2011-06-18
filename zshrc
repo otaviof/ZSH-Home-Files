@@ -89,11 +89,27 @@ unsetopt bg_nice
 unsetopt listambiguous
 
 # ----------------------------------------------------------------------------
+# -- Command Prompt:
+# ----------------------------------------------------------------------------
+
+colors && PROMPT=$'%n%{$fg[red]%}@%{$reset_color%}%m:%{$fg[yellow]%}%~%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}%(#.#.$)%{$reset_color%} ' && RPROMPT=''
+
+# ----------------------------------------------------------------------------
 # -- ZSH Completion:
 # ----------------------------------------------------------------------------
 
 zstyle ':completion:*' \
+    use-cache on
+zstyle ':completion:*' \
+    cache-path ~/.zsh/cache
+zstyle ':completion:*:complete:(cd|pushd):*' tag-order \
+    'local-directories named-directories'
+zstyle ':completion:*' \
      list-prompt '%SAt %p: Hit TAB for more, or the character to insert%s'
+zstyle ':completion:*' \
+    group-name ''
+zstyle ':completion:*:descriptions' \
+    format '%S%d%s'
 zstyle -e ':completion:*:approximate:*' max-errors \
    'reply=( $(( ($#PREFIX+$#SUFFIX)/3 )) numeric )'
 zstyle ':completion:*' \
@@ -129,12 +145,6 @@ zstyle ':completion:*:functions' \
     ignored-patterns '_*'
 zstyle ':completion:*:*:*:users' \
     ignored-patterns '_*'
-
-# ----------------------------------------------------------------------------
-# -- Command Prompt:
-# ----------------------------------------------------------------------------
-
-colors && PROMPT=$'%n%{$fg[red]%}@%{$reset_color%}%m:%{$fg[yellow]%}%~%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}%(#.#.$)%{$reset_color%} ' && RPROMPT=''
 
 # ----------------------------------------------------------------------------
 # -- Vim Mode:
