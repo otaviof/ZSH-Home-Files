@@ -23,7 +23,7 @@ if [[ -z "$SSH_CONNECTION" && $_OSTYPE == "darwin" ]]; then
     # vim as pager
     export PAGER="vimpager"
     # avoid build for other archs
-    export ARCHFLAGS="-arch x86_64" # -arch i386 -arch x86_64 -arch ppc
+    export ARCHFLAGS="-arch i386 -arch x86_64"  # -arch ppc
     # network location
     export OSX_NETWORK_LOCATION=$(scselect 2>&1 |egrep '^ \* ' |sed 's/.*(\(.*\))/\1/;')
     # custom directory search (speed-up)
@@ -62,7 +62,7 @@ export   PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
 export MODULEBUILDRC="$HOME/perl5/.modulebuildrc"
 
 if [[ $_OSTYPE == "darwin" ]]; then
-    PERL5LIB="$HOME/D/P/B/main/lib:$HOME/perl5/lib/perl5:$HOME/perl5/lib/perl5/darwin-thread-multi-2level"
+    PERL5LIB="$HOME/perl5/lib/perl5:$HOME/perl5/lib/perl5/darwin-thread-multi-2level"
 else
     PERL5LIB="$HOME/perl5/lib/perl5:$HOME/perl5/lib/perl5/x86_64-linux-gnu-thread-multi"
 fi

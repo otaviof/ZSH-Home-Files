@@ -75,6 +75,9 @@ elif [[ $_OSTYPE == "linux" ]]; then
     # GNU/Linux
     #
 
+    # managing paths
+    export PATH="${PATH}:${HOME}/.bin"
+
     alias l.='ls -G -G --color -d .*'
     alias ll='ls -F -G --color -lh '
     alias ls='ls -F -G --color '
