@@ -7,10 +7,8 @@ fpath=(
 )
 
 autoload -U ~/.zsh/completion/*(:t)
-autoload -Uz compinit
-autoload -U colors
-
-compinit -u
+autoload -Uz compinit && compinit -u
+autoload -U colors && colors
 
 # ----------------------------------------------------------------------------
 # -- Misc Methods:
@@ -92,7 +90,9 @@ unsetopt listambiguous
 # -- Command Prompt:
 # ----------------------------------------------------------------------------
 
-colors && PROMPT=$'%n%{$fg[red]%}@%{$reset_color%}%m:%{$fg[yellow]%}%~%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}%(#.#.$)%{$reset_color%} ' && RPROMPT=''
+setenv PROMPT "%{$reset_color%}%n%{$fg[red]%}@%{$reset_color%}%m:%{$fg[yellow]%}%~%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}%(#.#.$) %"
+
+unsetopt prompt_subst
 
 # ----------------------------------------------------------------------------
 # -- ZSH Completion:
