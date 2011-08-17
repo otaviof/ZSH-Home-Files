@@ -72,7 +72,6 @@ setopt no_beep
 setopt nobanghist
 setopt noclobber
 setopt notify
-setopt prompt_subst
 setopt pushdminus
 setopt pushdsilent
 setopt pushdtohome
@@ -90,9 +89,9 @@ unsetopt listambiguous
 # -- Command Prompt:
 # ----------------------------------------------------------------------------
 
-setenv PROMPT "%{$reset_color%}%n%{$fg[red]%}@%{$reset_color%}%m:%{$fg[yellow]%}%~%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}%(#.#.$) %"
+PROMPT=$'%{$reset_color%}%n%{$fg[red]%}@%{$reset_color%}%m:%{$fg[yellow]%}%~%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}%(#.#.$) %'
 
-unsetopt prompt_subst
+setopt prompt_subst
 
 # ----------------------------------------------------------------------------
 # -- ZSH Completion:
