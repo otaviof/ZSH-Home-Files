@@ -27,6 +27,15 @@ function dig_hosts {
     echo $( ack "^[^#].*?$1" /etc/hosts |awk '{print $1}' )
 }
 
+function mvim_dr {
+    cd ~/Documents/eBay/r && \
+        mvim dr/DR_$(date +%Y%m%d).textile
+}
+
+function vol {
+    sudo osascript -e "set volume output volume $*";
+}
+
 # ----------------------------------------------------------------------------
 # -- Compatibility Issues:
 # ----------------------------------------------------------------------------
