@@ -32,10 +32,6 @@ function mvim_dr {
         mvim dr/DR_$(date +%Y%m%d).textile
 }
 
-function vol {
-    sudo osascript -e "set volume output volume $*";
-}
-
 # ----------------------------------------------------------------------------
 # -- Compatibility Issues:
 # ----------------------------------------------------------------------------

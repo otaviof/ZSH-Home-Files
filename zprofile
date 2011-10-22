@@ -45,7 +45,7 @@ if [[ $_OSTYPE == "darwin" ]]; then
         |xargs -n 2 git diff -R \
         |mvimdiff -R -c 'colorscheme blackboard' -c 'set ic' - > /dev/null 2>&1"
 
-    alias gitx='open -a GitX --args --local -225 .git'
+    alias gitx='/usr/local/bin/gitx --local -250'
     alias gvim='mvim'
 
     alias hosts="sudo mvim /etc/hosts"
