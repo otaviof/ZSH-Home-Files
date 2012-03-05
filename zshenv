@@ -51,6 +51,7 @@ source $HOME/.github
 #     for some awkward reason it's not being true;
 #
 
+export MANPATH=""
 [[ -x '/usr/libexec/path_helper' ]] && \
     eval "$(/usr/libexec/path_helper -s)"
 

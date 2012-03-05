@@ -9,6 +9,7 @@ alias ff='find ./ -iname $*'
 alias mv='mv -iv'
 alias rm='rm -iv'
 alias perldoc='perldoc -t'
+alias tmux='tmux -2'
 
 # ---------------------------------------------------------------------------
 # -- Booking's:
