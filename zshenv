@@ -20,6 +20,8 @@ export SAVEHIST=500000
 # TODO: a better way do test if it's my mac or not
 if [[ -z "$SSH_CONNECTION" && $_OSTYPE == "darwin" ]]; then
     export HOST=$(head -n 5 /etc/hosts |grep '^127' |awk '{print $3}')
+    # python modules from macports
+    export PYTHONPATH="/opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/:/opt/local/lib/python/site-packages"
     # vim as pager
     export PAGER="vimpager"
     # avoid build for other archs
