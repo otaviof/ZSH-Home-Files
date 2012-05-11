@@ -11,12 +11,69 @@ autoload -Uz compinit && compinit -u
 autoload -U colors && colors
 
 # ----------------------------------------------------------------------------
-# -- Misc Methods:
+# -- Command Prompt:
 # ----------------------------------------------------------------------------
 
-precmd () {
-    echo -n "\033]1;$USERNAME@$HOST^G\033]2;$PWD> - $USERNAME@$HOST ($status)"
+autoload -Uz edit-command-line
+
+if [[ "$MODE_INDICATOR" == "" ]]; then
+    MODE_INDICATOR="%{$fg_bold[red]%}<%{$reset_color%}%{$fg[red]%}<<%{$reset_color%}"
+fi
+
+function zle-line-init {
+    zle reset-prompt
 }
+
+rprompt_cached=$RPROMPT
+function zle-line-init zle-keymap-select {
+    RPROMPT="${${KEYMAP/vicmd/$MODE_INDICATOR}/(main|viins)/$rprompt_cached}"
+    zle reset-prompt
+}
+
+# Accept RETURN in vi command mode.
+function accept_line {
+    RPROMPT=$rprompt_cached
+    builtin zle .accept-line
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+zle -N accept_line
+zle -N edit-command-line
+
+PROMPT=$'%{$reset_color%}%n%{$fg[red]%}@%{$reset_color%}%m:%{$fg[yellow]%}%~%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}%(#.#.$) %'
+
+setopt prompt_subst
+
+# ----------------------------------------------------------------------------
+# -- Vim Mode:
+# ----------------------------------------------------------------------------
+
+# Avoid binding ^J, ^M,  ^C, ^?, ^S, ^Q, etc.
+bindkey -d # Reset to default.
+bindkey -v # Use vi key bindings.
+bindkey -M vicmd "^M" accept_line # Alow RETURN in vi command.
+bindkey -M vicmd v edit-command-line # ESC-v to edit in an external editor.
+
+bindkey ' ' magic-space 
+bindkey -M vicmd "gg" beginning-of-history
+bindkey -M vicmd "G" end-of-history
+bindkey -M vicmd "k" history-search-backward
+bindkey -M vicmd "j" history-search-forward
+bindkey -M vicmd "?" history-incremental-search-backward
+bindkey -M vicmd "/" history-incremental-search-forward
+
+bindkey -M viins "^L" clear-screen
+bindkey -M viins "^W" backward-kill-word
+bindkey -M viins "^A" beginning-of-line
+bindkey -M viins "^E" end-of-line
+
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
+
+# ----------------------------------------------------------------------------
+# -- Misc Methods:
+# ----------------------------------------------------------------------------
 
 function git_prompt_info() {
     git branch --no-color 2> /dev/null \
@@ -25,11 +82,6 @@ function git_prompt_info() {
 
 function dig_hosts {
     echo $( ack "^[^#].*?$1" /etc/hosts |awk '{print $1}' )
-}
-
-function mvim_dr {
-    cd ~/Documents/eBay/r && \
-        mvim dr/DR_$(date +%Y%m%d).textile
 }
 
 # ----------------------------------------------------------------------------
@@ -41,7 +93,7 @@ setenv() {
 }
 
 freload() {
-    while (( $# )); do
+    while (( $g)); do
         unfunction $1
         autoload -U $1
         shift
@@ -85,18 +137,12 @@ setopt rcquotes
 setopt recexact
 setopt rm_star_wait
 setopt share_history
+setopt chase_links
+setopt interactive_comments
 
 unsetopt autoparamslash
 unsetopt bg_nice
 unsetopt listambiguous
-
-# ----------------------------------------------------------------------------
-# -- Command Prompt:
-# ----------------------------------------------------------------------------
-
-PROMPT=$'%{$reset_color%}%n%{$fg[red]%}@%{$reset_color%}%m:%{$fg[yellow]%}%~%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}%(#.#.$) %'
-
-setopt prompt_subst
 
 # ----------------------------------------------------------------------------
 # -- ZSH Completion:
@@ -149,19 +195,6 @@ zstyle ':completion:*:functions' \
     ignored-patterns '_*'
 zstyle ':completion:*:*:*:users' \
     ignored-patterns '_*'
-
-# ----------------------------------------------------------------------------
-# -- Vim Mode:
-# ----------------------------------------------------------------------------
-
-bindkey -v
-
-bindkey -M vicmd "j" history-search-forward
-bindkey -M vicmd "k" history-search-backward
-bindkey -M vicmd "P" insert-last-word
-
-bindkey "^[[A" history-search-backward
-bindkey "^[[B" history-search-forward
 
 # ----------------------------------------------------------------------------
 # -- Language:
