@@ -60,8 +60,8 @@ bindkey -M vicmd "gg" beginning-of-history
 bindkey -M vicmd "G" end-of-history
 bindkey -M vicmd "k" history-search-backward
 bindkey -M vicmd "j" history-search-forward
-bindkey -M vicmd "?" history-incremental-search-backward
-bindkey -M vicmd "/" history-incremental-search-forward
+# bindkey -M vicmd "?" history-incremental-search-backward
+# bindkey -M vicmd "/" history-incremental-search-forward
 
 bindkey -M viins "^L" clear-screen
 bindkey -M viins "^W" backward-kill-word
@@ -93,7 +93,7 @@ setenv() {
 }
 
 freload() {
-    while (( $g)); do
+    while (( $# )); do
         unfunction $1
         autoload -U $1
         shift
@@ -137,7 +137,7 @@ setopt rcquotes
 setopt recexact
 setopt rm_star_wait
 setopt share_history
-setopt chase_links
+# setopt chase_links
 setopt interactive_comments
 
 unsetopt autoparamslash
