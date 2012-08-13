@@ -2,6 +2,7 @@
 # github.com/otaviof/ZSH-Home-Files
 
 fpath=(
+    /usr/local/share/zsh-completions
     ${HOME}/.zsh/completion/
     ${fpath}
 )

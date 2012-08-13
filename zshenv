@@ -46,18 +46,6 @@ export  MYVIMRC="$HOME/.vim/vimrc"
 source $HOME/.github
 
 #
-# System-wide environment settings for ZSH
-#
-# FIXME:
-#   - in first place this path_helper should be called from /etc/zshenv, but
-#     for some awkward reason it's not being true;
-#
-
-export MANPATH=""
-[[ -x '/usr/libexec/path_helper' ]] && \
-    eval "$(/usr/libexec/path_helper -s)"
-
-#
 # Perl's Local Lib
 #
 
